@@ -1,0 +1,39 @@
+<launch>
+  <include
+    file="$(find gazebo_ros)/launch/empty_world.launch" />
+  <node
+    name="spawn_model"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-file $(find my_robot_description)/urdf/robot.xacro -urdf -model my_robot"
+    output="screen" />
+    <!--
+  <node
+    name="fake_joint_calibration"
+    pkg="rostopic"
+    type="rostopic"
+    args="pub /calibrated std_msgs/Bool true" />    -->
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find my_robot_description)/urdf/robot.xacro'"/>  
+
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui">
+    <remap from="/joint_states" to="/robot/joint_states" />
+    <param name="use_gui" value="True"/>    
+  </node>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find my_robot_description)/config/myrobot_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/my_robot" args="base_link__link_01_position_controller link_1_link_2_position_controller link_2_link_3_position_controller link_3_link_4_position_controller link_4_link_5_position_controller gripper_joint1_position_controller gripper_joint2_position_controller joint_state_controller"/>
+
+
+  <param name="robot_description"  command="cat $(find my_robot_description)/urdf/robot.xacro" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/robot_joint_states" to="/my_robot/joint_states" />
+  </node>
+
+  
+
+</launch>

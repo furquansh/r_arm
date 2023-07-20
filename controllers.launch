@@ -1,0 +1,13 @@
+<launch>
+    
+    
+  <param name="robot_description" command="cat $(find my_robot_description)/urdf/robot.xacro" />
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find my_robot_description)/config/myrobot_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/my_robot" args="base_link__link_01_position_controller link_1_link_2_position_controller link_2_link_3_position_controller link_3_link_4_position_controller link_4_link_5_position_controller gripper_joint1_position_controller gripper_joint2_position_controller joint_state_controller"/>
+
+</launch>

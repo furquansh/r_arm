@@ -1,0 +1,472 @@
+<?xml version="1.0" ?>
+
+<robot name="mrm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find my_robot_description)/urdf/example_include.xacro" />
+
+
+    <!-- Used for fixing robot to Gazebo 'base_link' -->
+    <link name="world"/>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            
+        </collision>
+
+    <joint name="fixed" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+         <origin rpy="0 0 0" xyz="1 0 0"/>
+    </joint>
+
+
+    
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="1 1 1"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="1 1 1"/>
+            </geometry>
+        </collision>
+     
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia
+                ixx="0.16666666666666666" ixy="0.0" ixz="0.0"
+                iyy="0.16666666666666666" iyz="0.0"
+                izz="0.16666666666666666"/>
+        </inertial> 
+          <!--
+        <xacro:inertial_box mass="5" x="1" y="1" z="1">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+              -->
+                
+        <dynamics damping="3.0" friction="0.3"/>
+    </link>   
+
+    
+    <joint name="base_link__link_01" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="5.5" />
+        <origin rpy="0 0 0" xyz="0 0 0.5"/>
+        <parent link="base_link"/>
+        <child link="link1"/>
+        <dynamics damping="0.7"/>
+    </joint>
+    
+    <link name="link1">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <geometry>
+                <cylinder radius="0.35" length="0.4"/>
+            </geometry>
+            <material name="green">
+                <color rgba="0 1 0 1"/> 
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <geometry>
+                <cylinder radius="0.35" length="0.4"/>
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.2" rpy="0 0 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.035166666666666666" ixy="0.0" ixz="0.0"
+                iyy="0.035166666666666666" iyz="0.0"
+                izz="0.048999999999999995"/>
+        </inertial> 
+        <!--
+        <xacro:inertial_cylinder mass="2.5" length="0.4" radius="0.35" >
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+        -->
+        <dynamics damping="0.1"/>
+    </link>
+
+
+    <joint name="link_1_link_2" type="revolute">
+        <axis xyz="0 1 0" />
+        <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5" />
+        <origin rpy="0 0 0" xyz="0 0 0.3"/>
+        <parent link="link1"/>
+        <child link="link2"/>
+        <dynamics damping="3.0" friction="0.3"/>
+    </joint>
+
+
+
+
+    <link name="link2">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.4"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.8"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/> 
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.4"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.8"/>
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.4" rpy="0 0 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.011791666666666669" ixy="0.0" ixz="0.0"
+                iyy="0.011791666666666669" iyz="0.0"
+                izz="0.00225"/>
+        </inertial>
+        
+        <dynamics damping="0.1"/>
+        <!--
+        <xacro:inertial_cylinder mass="1.0" length="0.8" radius="0.15" >
+            <origin xyz="0 0 0" rpy="0 0 0"/> 
+        </xacro:inertial_cylinder>    
+        -->
+
+    </link>
+
+    <joint name="link_2_link_3" type="revolute">
+        <axis xyz="0 1 0" />
+        <limit effort="1000.0" lower="-2.355" upper="2.355" velocity="0.5" />
+        <origin rpy="0 0 0" xyz="0 0 0.8"/>
+        <parent link="link2"/>
+        <child link="link3"/>
+        <dynamics damping="3.0" friction="0.3"/>
+    </joint>
+
+
+
+
+    <link name="link3">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.4"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.8"/>
+            </geometry>
+            <material name="yellow">
+                <color rgba="1 1 0 1"/> 
+            </material>
+            
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.4"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.8"/>
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.4" rpy="0 0 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.011791666666666669" ixy="0.0" ixz="0.0"
+                iyy="0.011791666666666669" iyz="0.0"
+                izz="0.00225"/>
+        </inertial>
+        <!--
+        <xacro:inertial_cylinder mass="1.0" length="0.8" radius="0.15" >
+            <origin xyz="0 0 0.4" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+        -->
+        <dynamics damping="3.0" friction="0.3"/>
+    </link>
+
+    <joint name="link_3_link_4" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5" />
+        <origin rpy="0 0 0" xyz="0 0 0.8"/>
+        <parent link="link3"/>
+        <child link="link4"/>
+        <dynamics damping="0.1"/>
+    </joint>
+
+
+    <link name="link4">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.4"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.8"/>
+            </geometry>
+            <material name="green">
+                <color rgba="0 1 0 1"/> 
+            </material>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.4"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.8"/>
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.4" rpy="0 0 0"/>
+            <mass value="0.5"/>
+            <inertia
+               ixx="0.011791666666666669" ixy="0.0" ixz="0.0"
+               iyy="0.011791666666666669" iyz="0.0"
+               izz="0.00225"/>
+        </inertial>
+        <!--
+        
+        <xacro:inertial_cylinder mass="1.0" length="0.8" radius="0.15" >
+            <origin xyz="0 0 0.4" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+        -->
+        <dynamics damping="3.0" friction="0.3"/>
+    </link>
+
+
+    <joint name="link_4_link_5" type="revolute">
+        <axis xyz="0 1 0" />
+        <limit effort="1000.0" lower="-2.355" upper="2.355" velocity="0.5" />
+        <origin rpy="0 0 0" xyz="0 0 0.8"/>
+        <parent link="link4"/>
+        <child link="link5"/>
+        <dynamics damping="0.1"/>
+    </joint>
+
+
+    <link name="link5">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.125"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.25"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.125"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.25"/>
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.125" rpy="0 0 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.002166666666666667" ixy="0.0" ixz="0.0"
+                iyy="0.002166666666666667" iyz="0.0"
+                izz="0.00225"/>
+        </inertial>
+        <!--
+        <xacro:inertial_cylinder mass="1.0" length="0.25" radius="0.15" >
+            <origin xyz="0 0 0.125" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+        -->
+        <dynamics damping="3.0" friction="0.3"/>
+    </link>
+
+   
+
+    <joint name="gripper_joint1" type="prismatic">
+        <parent link="link5"/>
+        <child link="gripper_link1"/>
+        <origin xyz="0.075 0 0.25" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="0" upper="0.1" effort="10" velocity="0.5"/>
+        <dynamics damping="0.1"/>
+    </joint>
+
+    <link name="gripper_link1">
+        <visual>
+            <origin rpy="0 0 0.025" xyz="0 0 0.125"/>
+            <geometry>
+                <box size="0.1 0.1 0.25" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0.025" xyz="0 0 0.125"/>
+            <geometry>
+                <box size="0.1 0.1 0.35" />
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.025" rpy="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia
+                ixx="0.0005520833333333332" ixy="0.0" ixz="0.0"
+                iyy="0.0005520833333333332" iyz="0.0"
+                izz="8.333333333333336e-05"/>
+        </inertial>
+        
+        <dynamics damping="3.0" friction="0.3"/>
+        <!--
+        <xacro:inertial_box mass="0.4" x="0.1" y="0.1" z="0.35" >
+            <origin rpy="0 0 0" xyz="0 0 0.125"/>
+        </xacro:inertial_box>
+        -->
+   
+    </link>
+
+
+    <joint name="gripper_joint2" type="prismatic">
+        <parent link="link5"/>
+        <child link="gripper_link2"/>
+        <origin xyz="-0.075 0 0.25" rpy="0 0 0"/>
+        <axis xyz="-1 0 0"/>
+        <limit lower="0" upper="0.1" effort="10" velocity="0.5"/>
+        <dynamics damping="3.0" friction="0.3"/>
+    </joint>
+
+
+
+    <link name="gripper_link2">
+        <visual>
+            <origin rpy="0 0 0.025" xyz="0 0 0.125"/>
+            <geometry>
+                <box size="0.1 0.1 0.25" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0.025" xyz="0 0 0.125"/>
+            <geometry>
+                <box size="0.1 0.1 0.35" />
+            </geometry>
+        </collision>
+        
+        <inertial>
+            <origin xyz="0 0 0.025" rpy="0 0 0"/>
+            <mass value="0.1"/>
+            <inertia
+                ixx="0.0005520833333333332" ixy="0.0" ixz="0.0"
+                iyy="0.0005520833333333332" iyz="0.0"
+                izz="8.333333333333336e-05"/>
+        </inertial>
+       <!--
+        <xacro:inertial_box mass="0.4" x="0.1" y="0.1" z="0.35" >
+            <origin rpy="0 0 0" xyz="0 0 0.125"/>
+        </xacro:inertial_box>
+        -->
+        <dynamics damping="3.0" friction="0.3"/>
+   
+    </link>
+
+
+    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="base_link__link_01">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_1_link_2">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor2">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_2_link_3">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor3">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    	<transmission name="tran4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_3_link_4">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor4">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran5">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link_4_link_5">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor5">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran6">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="gripper_joint1">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor6">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran7">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="gripper_joint2">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor7">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/my_robot</robotNamespace>  
+            <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        </plugin>
+    </gazebo>
+
+
+    	
+
+    
+
+
+
+    
+
+    
+
+
+
+
+    
+
+
+
+    
+</robot>
